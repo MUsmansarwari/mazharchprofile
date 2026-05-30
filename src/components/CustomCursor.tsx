@@ -6,6 +6,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -17,6 +18,15 @@ export default function CustomCursor() {
   // Ring: Slightly slower, trailing effect
   const ringX = useSpring(mouseX, { stiffness: 300, damping: 25 });
   const ringY = useSpring(mouseY, { stiffness: 300, damping: 25 });
+
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
+    };
+    checkTouch();
+    window.addEventListener("resize", checkTouch);
+    return () => window.removeEventListener("resize", checkTouch);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {

@@ -103,7 +103,7 @@ const Card = ({ index, title, subtitle, description, icon: Icon, progress, total
         className="group relative w-full max-w-5xl bg-slate-900 text-theme-ivory rounded-[2rem] p-8 md:p-14 shadow-[0_10px_40px_rgb(0,0,0,0.2)] border border-[#B8860B]/30 border-t border-t-[#B8860B]/60 overflow-hidden flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start origin-top"
       >
         <motion.div
-          className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 hidden md:block"
           style={{
             maskImage: useMotionTemplate`radial-gradient(250px circle at ${mouseX}px ${mouseY}px, black, transparent)`,
             WebkitMaskImage: useMotionTemplate`radial-gradient(250px circle at ${mouseX}px ${mouseY}px, black, transparent)`,

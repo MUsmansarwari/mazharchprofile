@@ -4,55 +4,16 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const galleryItems = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800&h=1000",
-    title: "Community Center Inauguration",
-    width: 800,
-    height: 1000,
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&q=80&w=800&h=533",
-    title: "Healthcare Leadership Summit",
-    width: 800,
-    height: 533,
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=800&h=1200",
-    title: "PMP Award Ceremony",
-    width: 800,
-    height: 1200,
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800&h=800",
-    title: "Corporate Strategy Review",
-    width: 800,
-    height: 800,
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&q=80&w=800&h=600",
-    title: "Philanthropic Board Meeting",
-    width: 800,
-    height: 600,
-  },
-  {
-    id: 6,
-    src: "https://images.unsplash.com/photo-1593113580332-ceb4b8f152d1?auto=format&fit=crop&q=80&w=800&h=1000",
-    title: "Orphanage Support Drive",
-    width: 800,
-    height: 1000,
-  },
-  {
-    id: 7,
-    src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=800&h=500",
-    title: "International Trade Forum",
-    width: 800,
-    height: 500,
-  },
+  { id: 1, src: "/images/Vertical 1.webp", alt: "Vertical 1", width: 800, height: 1200 },
+  { id: 2, src: "/images/Horizontal 1.webp", alt: "Horizontal 1", width: 1200, height: 800 },
+  { id: 3, src: "/images/Vertical 2.webp", alt: "Vertical 2", width: 800, height: 1200 },
+  { id: 4, src: "/images/Horizontal 2.webp", alt: "Horizontal 2", width: 1200, height: 800 },
+  { id: 5, src: "/images/Vertical 3.webp", alt: "Vertical 3", width: 800, height: 1200 },
+  { id: 6, src: "/images/Horizontal 3.webp", alt: "Horizontal 3", width: 1200, height: 800 },
+  { id: 7, src: "/images/Vertical 4.webp", alt: "Vertical 4", width: 800, height: 1200 },
+  { id: 8, src: "/images/Horizontal 4.webp", alt: "Horizontal 4", width: 1200, height: 800 },
+  { id: 9, src: "/images/Vertical 5.webp", alt: "Vertical 5", width: 800, height: 1200 },
+  { id: 10, src: "/images/Horizontal 5.webp", alt: "Horizontal 5", width: 1200, height: 800 },
 ];
 
 export default function Gallery() {
@@ -75,33 +36,25 @@ export default function Gallery() {
           </p>
         </motion.div>
 
-        {/* Smart Masonry Grid */}
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+        {/* Pure CSS Masonry Grid */}
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6">
           {galleryItems.map((item, index) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-              className="break-inside-avoid mb-4 relative rounded-2xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white"
+              transition={{ duration: 0.6, delay: (index % 4) * 0.1, ease: "easeOut" }}
+              className="break-inside-avoid mb-6 relative rounded-[2rem] overflow-hidden group cursor-pointer bg-stone-50/10 hover:scale-[1.02] hover:shadow-[0_0_25px_#C59B2740] transition-all duration-300"
             >
-              {/* Image using auto-height styling based on intrinsic dimensions */}
               <Image
                 src={item.src}
-                alt={item.title}
+                alt={item.alt}
                 width={item.width}
                 height={item.height}
-                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                className="w-full h-auto object-cover rounded-[2rem]"
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
-              
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6 text-center backdrop-blur-[2px]">
-                <span className="text-theme-gold text-lg md:text-xl font-serif translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out drop-shadow-md">
-                  {item.title}
-                </span>
-              </div>
             </motion.div>
           ))}
         </div>
