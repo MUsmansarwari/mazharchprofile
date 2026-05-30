@@ -4,16 +4,16 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const galleryItems = [
-  { id: 1, src: "/images/Vertical 1.webp", alt: "Vertical 1", width: 800, height: 1200 },
-  { id: 2, src: "/images/Horizontal 1.webp", alt: "Horizontal 1", width: 1200, height: 800 },
-  { id: 3, src: "/images/Vertical 2.webp", alt: "Vertical 2", width: 800, height: 1200 },
-  { id: 4, src: "/images/Horizontal 2.webp", alt: "Horizontal 2", width: 1200, height: 800 },
-  { id: 5, src: "/images/Vertical 3.webp", alt: "Vertical 3", width: 800, height: 1200 },
-  { id: 6, src: "/images/Horizontal 3.webp", alt: "Horizontal 3", width: 1200, height: 800 },
-  { id: 7, src: "/images/Vertical 4.webp", alt: "Vertical 4", width: 800, height: 1200 },
-  { id: 8, src: "/images/Horizontal 4.webp", alt: "Horizontal 4", width: 1200, height: 800 },
-  { id: 9, src: "/images/Vertical 5.webp", alt: "Vertical 5", width: 800, height: 1200 },
-  { id: 10, src: "/images/Horizontal 5.webp", alt: "Horizontal 5", width: 1200, height: 800 },
+  { id: 1, src: "/Images/Vertical 1.webp", alt: "Vertical 1", width: 800, height: 1200 },
+  { id: 2, src: "/Images/Horizontal 1.webp", alt: "Horizontal 1", width: 1200, height: 800 },
+  { id: 3, src: "/Images/Vertical 2.webp", alt: "Vertical 2", width: 800, height: 1200 },
+  { id: 4, src: "/Images/Horizontal 2.webp", alt: "Horizontal 2", width: 1200, height: 800 },
+  { id: 5, src: "/Images/Vertical 3.webp", alt: "Vertical 3", width: 800, height: 1200 },
+  { id: 6, src: "/Images/Horizontal 3.webp", alt: "Horizontal 3", width: 1200, height: 800 },
+  { id: 7, src: "/Images/Vertical 4.webp", alt: "Vertical 4", width: 800, height: 1200 },
+  { id: 8, src: "/Images/Horizontal 4.webp", alt: "Horizontal 4", width: 1200, height: 800 },
+  { id: 9, src: "/Images/Vertical 5.webp", alt: "Vertical 5", width: 800, height: 1200 },
+  { id: 10, src: "/Images/Horizontal 5.webp", alt: "Horizontal 5", width: 1200, height: 800 },
 ];
 
 export default function Gallery() {
