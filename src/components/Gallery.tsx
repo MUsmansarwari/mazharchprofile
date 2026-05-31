@@ -28,12 +28,28 @@ const galleryItems: GalleryItem[] = [
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
-  // Close on Escape key press
+  const handleNext = () => {
+    setSelectedImage((prev) => {
+      if (!prev) return null;
+      const idx = galleryItems.findIndex((i) => i.id === prev.id);
+      return galleryItems[(idx + 1) % galleryItems.length];
+    });
+  };
+
+  const handlePrev = () => {
+    setSelectedImage((prev) => {
+      if (!prev) return null;
+      const idx = galleryItems.findIndex((i) => i.id === prev.id);
+      return galleryItems[(idx - 1 + galleryItems.length) % galleryItems.length];
+    });
+  };
+
+  // Keyboard navigation: Close on Escape, Prev/Next on Arrows
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setSelectedImage(null);
-      }
+      if (e.key === "Escape") setSelectedImage(null);
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "ArrowLeft") handlePrev();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -104,30 +120,61 @@ export default function Gallery() {
               </svg>
             </button>
 
-            {/* Modal Content */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center justify-center rounded-[2rem] overflow-hidden shadow-[0_0_40px_#C59B2740]"
+            {/* Previous Button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+              className="absolute left-2 sm:left-6 z-50 p-2 text-theme-gold hover:text-theme-goldMuted bg-slate-900/50 hover:bg-slate-900/80 rounded-full transition-all duration-200"
+              aria-label="Previous image"
             >
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                width={selectedImage.width}
-                height={selectedImage.height}
-                className="w-full h-auto max-h-[85vh] object-contain rounded-[2rem]"
-                sizes="100vw"
-                priority
-              />
-              <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="text-theme-ivory font-serif text-xl md:text-2xl text-center drop-shadow-md">
-                  {selectedImage.alt}
-                </p>
-              </div>
-            </motion.div>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 sm:w-10 sm:h-10">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={(e) => { e.stopPropagation(); handleNext(); }}
+              className="absolute right-2 sm:right-6 z-50 p-2 text-theme-gold hover:text-theme-goldMuted bg-slate-900/50 hover:bg-slate-900/80 rounded-full transition-all duration-200"
+              aria-label="Next image"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 sm:w-10 sm:h-10">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Modal Content with AnimatePresence for smooth sliding transition */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedImage.id}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.7}
+                onDragEnd={(e, { offset }) => {
+                  const swipeThreshold = 50;
+                  if (offset.x < -swipeThreshold) {
+                    handleNext();
+                  } else if (offset.x > swipeThreshold) {
+                    handlePrev();
+                  }
+                }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center justify-center rounded-[2rem] overflow-hidden shadow-[0_0_40px_#C59B2740] cursor-grab active:cursor-grabbing"
+              >
+                <Image
+                  src={selectedImage.src}
+                  alt={selectedImage.alt}
+                  width={selectedImage.width}
+                  height={selectedImage.height}
+                  className="w-full h-auto max-h-[85vh] object-contain rounded-[2rem] pointer-events-none"
+                  sizes="100vw"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
